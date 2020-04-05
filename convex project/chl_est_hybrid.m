@@ -2,9 +2,9 @@
 clc; clear all; close all;
 
 % Some definitions
-L = 20; K = 10; M = 64; Nrf = 2; Qb = 7;
+L = 2; K = 10; M = 64; Nrf = 16; Qb = 7;
 Lp = 2; d_lambda = 1/2;
-batch_size = 1e3;
+batch_size = 20;
 SNR_dB = 20;
 SNR = 10^(SNR_dB/10);
 sigma_2 = 1; % Noise power
@@ -37,11 +37,11 @@ else
     tau = sqrt(sigma_2) * ( 1 + 1/log(Nrf * L)) * sqrt((Nrf * L) * log(Nrf * L) + (Nrf * L) * log(4 * pi * log(Nrf * L))); 
 end
 
-%if(dbg)
-%    eta = 1e-4;
-%else
-%    eta = L * Nrf * sigma_2 + fact * sqrt(L * Nrf) * sigma_2;
-%end
+if(dbg)
+   eta = 1e-4;
+else
+   eta = L * Nrf * sigma_2 + fact * sqrt(L * Nrf) * sigma_2;
+end
 % For simplicity, assume the rows of X are taken from the rows of eye(L)
 mms_err = zeros(1, batch_size);
 
@@ -57,7 +57,7 @@ for ii = 1:batch_size
     end
     
     % Transmit pilots
-    Z = W * (repmat(H,[L,1]) + N);
+    Z = W * (sqrt(P/(K * L)) * repmat(H,[L,1]) + N);
     
     % Channel estimation
     H_est = zeros(M, K);
@@ -67,10 +67,11 @@ for ii = 1:batch_size
             variables t u1
             variable u(M - 1) complex
             variable x(M) complex
-            minimize sum_square_abs(W * repmat(x,[L,1]) - crt_z) + tau * (t + u1)
+            minimize sum_square_abs(W * sqrt(P/(K * L)) * repmat(x,[L,1]) - crt_z) + tau * (t + u1)
+            %minimize (t + u1)
             subject to
                 [toeplitz([u1; u]) x; x' t] >= 0
-                %sum_square_abs(W * repmat(x,[L,1]) - crt_z) <= eta
+                %sum_square_abs(W * sqrt(P/(K * L)) * repmat(x,[L,1]) - crt_z) <= eta
         cvx_end
         H_est(:, k) = x;
     end

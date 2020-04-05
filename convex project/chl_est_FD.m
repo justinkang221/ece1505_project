@@ -4,7 +4,7 @@ clc; clear all; close all;
 % Some definitions
 L = 10; K = 10; M = 64; %L >= K
 Lp = 2; d_lambda = 1/2;
-batch_size = 1e3;
+batch_size = 20;
 SNR_dB = 20;
 SNR = 10^(SNR_dB/10);
 sigma_2 = 1; % Noise power
@@ -21,7 +21,7 @@ mms_err = zeros(1, batch_size);
 if(dbg)
     tau = 0;
 else
-    tau = sqrt(K/P * sigma_2) * ( 1 + 1/log(M)) * sqrt(M * log(M) + M * log(4 * pi * log(M))); 
+    tau = sqrt(sigma_2) * ( 1 + 1/log(M)) * sqrt(M * log(M) + M * log(4 * pi * log(M))); 
 end
 
 for ii = 1:batch_size
@@ -39,7 +39,7 @@ for ii = 1:batch_size
     Y = H * X + N;
     
     % Channel estimation
-    Z = Y * phi' * sqrt(K/P);
+    Z = Y * phi';
     
     H_est = zeros(M, K);
     for k = 1:K
@@ -48,7 +48,7 @@ for ii = 1:batch_size
             variables t u1
             variable u(M - 1) complex
             variable x(M) complex
-            minimize sum_square_abs(x - crt_z) + tau * (t + u1)
+            minimize sum_square_abs(sqrt(P/K) * x - crt_z) + tau * (t + u1)
             subject to
                 [toeplitz([u1; u]) x; x' t] >= 0
         cvx_end
