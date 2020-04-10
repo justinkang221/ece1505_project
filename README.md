@@ -7,3 +7,8 @@ This code was developed for ECE1505 (Convex Optimization). We compare different 
 In order to run this code, you must install the following libraries;
 1. ASP[https://www.cs.ubc.ca/~mpf/asp/]
 2. CVX[http://cvxr.com/cvx/]
+
+
+## Report
+
+To view a report of our fidings please see [https://www.overleaf.com/read/vddscgnmhzxg]
