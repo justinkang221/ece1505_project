@@ -11,4 +11,4 @@ In order to run this code, you must install the following libraries;
 
 ## Report
 
-To view a report of our fidings please see [https://www.overleaf.com/read/vddscgnmhzxg]
+To view a report of our findings please see [https://www.overleaf.com/read/vddscgnmhzxg]
