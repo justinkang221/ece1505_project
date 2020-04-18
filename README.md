@@ -12,3 +12,6 @@ In order to run this code, you must install the following libraries;
 ## Report
 
 To view a report of our findings please see [https://www.overleaf.com/read/vddscgnmhzxg]
+
+## Figures
+For the performance comparison figure (i.e., NMSE vs SNR), run chl_est_hybrod.m
