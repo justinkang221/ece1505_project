@@ -7,7 +7,7 @@ i=0;
 while t < Gb && i < L
     [~,g] = max(abs(A'*r));
     t = t+1;I = unique([I,g]);
-    x = pinv(A(:,I))*z;
+    x = A(:,I) \ z;
     r = z - A(:,I)*x;
     hv(I) = x;
     i=i+1;

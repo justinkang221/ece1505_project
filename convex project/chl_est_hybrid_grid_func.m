@@ -23,7 +23,7 @@ for i=1:Gb
 end
 for ii = 1:Nb
     % Generate channel
-    H = generate_chl(Lp, M, K, d_lambda);
+    H = params.H{ii};
     
     % Generate noise realization
     if(dbg)
@@ -33,13 +33,13 @@ for ii = 1:Nb
     end
     
     % Transmit pilots
-    Z = W * (sqrt(P/(K * L)) * repmat(H,[L,1]) + N);
+    Z = W * (sqrt(P) * repmat(H,[L,1]) + N);
     
     % Channel estimation
     H_est = zeros(M, K);
     for k = 1:K
         crt_z = Z(:, k);
-        A = W * sqrt(P/(K * L)) * repmat(psi,[L,1]);
+        A = W * sqrt(P) * repmat(psi,[L,1]);
         if type == "ompt"
             hv = OMPT(d, crt_z, A);
         elseif type == "omp"
