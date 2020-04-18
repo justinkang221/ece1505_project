@@ -15,3 +15,4 @@ To view a report of our findings please see [https://www.overleaf.com/read/vddsc
 
 ## Figures
 For the performance comparison figure (i.e., NMSE vs SNR), run chl_est_hybrid.m
+For gridpoints comparison figure (NMSE vs. G_b) run chl_est_hybrid_grid_vs_gridpoints.m
